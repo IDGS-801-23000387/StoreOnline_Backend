@@ -36,7 +36,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("netlify", policy =>
     {
-        policy.WithOrigins("https://tu-app.netlify.app") // 🔁 cámbialo por tu URL real de Netlify
+        policy.WithOrigins("https://tu-app.netlify.app") // ⚠️ cámbialo por tu URL real de Netlify
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
@@ -62,7 +62,7 @@ using (var scope = app.Services.CreateScope())
     catch (Exception ex)
     {
         Console.WriteLine("❌ Error al aplicar migraciones o cargar datos:");
-        Console.WriteLine(ex.Message);
+        Console.WriteLine(ex.ToString()); // imprime detalles completos del error
     }
 }
 

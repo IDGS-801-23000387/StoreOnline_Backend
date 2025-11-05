@@ -5,6 +5,93 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/items": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/items/{id}": {
+      "get": {
+        "tags": [
+          "Productos"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/addSale": {
+      "post": {
+        "tags": [
+          "Ventas"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Venta"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Venta"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Venta"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/sales": {
+      "get": {
+        "tags": [
+          "Ventas"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/WeatherForecast": {
       "get": {
         "tags": [
@@ -47,6 +134,119 @@
   },
   "components": {
     "schemas": {
+      "Producto": {
+        "required": [
+          "nombre"
+        ],
+        "type": "object",
+        "properties": {
+          "productoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombre": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "descripcion": {
+            "maxLength": 5000,
+            "type": "string",
+            "nullable": true
+          },
+          "categoria": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "marca": {
+            "maxLength": 100,
+            "type": "string",
+            "nullable": true
+          },
+          "precio": {
+            "type": "number",
+            "format": "double"
+          },
+          "calificacion": {
+            "type": "number",
+            "format": "double"
+          },
+          "existencias": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "imagenUrl": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "miniaturaUrl": {
+            "maxLength": 500,
+            "type": "string",
+            "nullable": true
+          },
+          "estadoDisponibilidad": {
+            "maxLength": 50,
+            "type": "string",
+            "nullable": true
+          },
+          "fechaRegistro": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ventas": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Venta"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Venta": {
+        "required": [
+          "nombreProducto"
+        ],
+        "type": "object",
+        "properties": {
+          "ventaId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "nombreProducto": {
+            "maxLength": 200,
+            "minLength": 1,
+            "type": "string"
+          },
+          "precioUnitario": {
+            "type": "number",
+            "format": "double"
+          },
+          "cantidad": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "number",
+            "format": "double",
+            "readOnly": true
+          },
+          "fechaVenta": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "producto": {
+            "$ref": "#/components/schemas/Producto"
+          }
+        },
+        "additionalProperties": false
+      },
       "WeatherForecast": {
         "type": "object",
         "properties": {

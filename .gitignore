@@ -1,0 +1,23 @@
+# Archivos de compilación
+bin/
+obj/
+
+# Configuración de usuario
+.vs/
+*.user
+*.suo
+*.swp
+*.bak
+*.log
+
+# Publicación
+publish/
+
+# Configuración local
+appsettings.Development.json
+
+# Sistema / IDE
+.idea/
+.vscode/
+Thumbs.db
+*.DS_Store

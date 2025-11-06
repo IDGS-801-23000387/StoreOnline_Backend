@@ -16,7 +16,6 @@ namespace StoreOnline_Backend.Controllers
             _context = context;
         }
 
-      
         [HttpPost("addSale")]
         public async Task<IActionResult> RegistrarVenta([FromBody] Venta venta)
         {
@@ -28,7 +27,7 @@ namespace StoreOnline_Backend.Controllers
             venta.PrecioUnitario = producto.Precio;
             venta.FechaVenta = DateTime.UtcNow;
             _context.Ventas.Add(venta);
-            await _context.SaveChangesAsync(
+            await _context.SaveChangesAsync();
             return Ok(new { success = true, message = "Venta registrada correctamente" });
         }
 

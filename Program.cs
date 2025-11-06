@@ -36,11 +36,15 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("netlify", policy =>
     {
-        policy.WithOrigins("https://tu-app.netlify.app") // ⚠️ cámbialo por tu URL real de Netlify
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy.WithOrigins(
+            "http://localhost:5173",                 // 👈 permite tu React local
+            "https://storeonlines.netlify.app"       // 👈 tu dominio en producción (sin / al final)
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
+
 
 var app = builder.Build();
 

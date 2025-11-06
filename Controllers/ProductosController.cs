@@ -16,14 +16,11 @@ namespace StoreOnline_Backend.Controllers
             _context = context;
         }
 
-        // ✅ /api/items?q=laptop
         [HttpGet("/api/items")]
         public async Task<IActionResult> BuscarProductos([FromQuery] string? q)
-        {
-            // Tomamos todos los productos
+        {  
             var query = _context.Productos.AsQueryable();
-
-            // Si hay texto de búsqueda, filtramos
+           
             if (!string.IsNullOrEmpty(q))
             {
                 var term = q.ToLower();
@@ -33,8 +30,7 @@ namespace StoreOnline_Backend.Controllers
                     p.Categoria.ToLower().Contains(term) ||
                     p.Marca.ToLower().Contains(term));
             }
-
-            // Seleccionamos solo los datos que necesita la lista de resultados
+           
             var resultados = await query
                 .Select(p => new
                 {
@@ -50,16 +46,12 @@ namespace StoreOnline_Backend.Controllers
                     p.MiniaturaUrl
                 })
                 .ToListAsync();
-
-            // Retornamos formato compatible con tu PWA
             return Ok(new
             {
                 total = resultados.Count,
                 items = resultados
             });
         }
-
-        // ✅ /api/items/{id}
         [HttpGet("/api/items/{id}")]
         public async Task<IActionResult> ObtenerProducto(int id)
         {

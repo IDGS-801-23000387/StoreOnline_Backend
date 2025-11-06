@@ -16,7 +16,7 @@ namespace StoreOnline_Backend.Controllers
             _context = context;
         }
 
-        // ✅ POST /api/addSale
+      
         [HttpPost("addSale")]
         public async Task<IActionResult> RegistrarVenta([FromBody] Venta venta)
         {
@@ -24,26 +24,15 @@ namespace StoreOnline_Backend.Controllers
             if (producto == null)
                 return NotFound(new { message = "Producto no encontrado" });
 
-            // Validar stock
-            if (producto.Existencias < venta.Cantidad)
-                return BadRequest(new { message = "No hay existencias suficientes" });
-
-            // Registrar venta
             venta.NombreProducto = producto.Nombre;
             venta.PrecioUnitario = producto.Precio;
             venta.FechaVenta = DateTime.UtcNow;
-
             _context.Ventas.Add(venta);
-
-            // Actualizar stock
-            producto.Existencias -= venta.Cantidad;
-
-            await _context.SaveChangesAsync();
-
+            await _context.SaveChangesAsync(
             return Ok(new { success = true, message = "Venta registrada correctamente" });
         }
 
-        // ✅ GET /api/sales
+       
         [HttpGet("sales")]
         public async Task<IActionResult> ObtenerVentas()
         {
